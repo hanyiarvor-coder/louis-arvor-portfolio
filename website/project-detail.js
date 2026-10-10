@@ -1,30 +1,54 @@
 (() => {
-  const groups = [{key:'china',name:'China',categories:['Research / Concept','Material / Process','Idea / Experiment']},{key:'france',name:'France',categories:['Research / Concept','Form / Exploration','Process / Outcome']}];
+  // All project content comes from projects-data.js.
+  const groups = window.LOUIS_PROJECTS;
   const params = new URLSearchParams(location.search);
   const group = groups.find(g => g.key === params.get('collection')) || groups[0];
   const value = Number(params.get('project'));
-  const index = Number.isInteger(value) && value >= 0 && value < 3 ? value : 0;
-  const names = ['Project A','Project B','Project C'];
+  const index = Number.isInteger(value) && value >= 0 && value < group.projects.length ? value : 0;
+  const project = group.projects[index];
   const url = (g,i) => `project.html?collection=${g.key}&project=${i}`;
-  document.title = `${names[index]} / ${group.name} — Louis Arvor`;
-  document.querySelector('#project-name').textContent = names[index];
-  document.querySelector('#project-no').textContent = `0${index+1}`;
-  document.querySelector('#collection').textContent = `${group.name.toUpperCase()} / SELECTED WORK`;
-  document.querySelector('#discipline').textContent = group.categories[index];
-  const list = document.querySelector('#project-list');
+  const $ = id => document.querySelector(`#${id}`);
+  const paragraphs = (lead, items) => [lead ? `<p class="large-copy">${lead}</p>` : '', ...items.map(t => `<p>${t}</p>`)].join('');
+
+  document.title = `${project.organisation} — Louis Arvor`;
+  $('project-name').textContent = project.organisation;
+  $('project-no').textContent = String(index + 1).padStart(2, '0');
+  $('collection').textContent = `${group.name.toUpperCase()} / SELECTED WORK`;
+  $('place-year').textContent = `${project.place.toUpperCase()} / ${project.year}`;
+  $('standfirst').innerHTML = project.standfirst;
+  $('discipline').textContent = project.category;
+  $('role').textContent = project.role;
+  $('period').textContent = project.period;
+  $('status').textContent = project.status;
+  $('lead-caption').textContent = project.organisation;
+  $('closing-caption').textContent = `${project.place} · ${project.period}`;
+  document.querySelectorAll('#lead-image, .project-image').forEach(img => {
+    img.src = project.image;
+    img.alt = project.image.includes('placeholder') ? '' : project.alt;
+  });
+  $('context-body').innerHTML = paragraphs(project.contextLead, project.context);
+  $('process-body').innerHTML = paragraphs(project.processLead, [project.process])
+    + `<div class="process-notes">${project.notes.map(([label, text]) => `<p><span>${label}</span>${text}</p>`).join('')}</div>`;
+  $('figures').textContent = project.figures.join(' · ');
+  $('figures-foot').textContent = `${project.place} · ${project.period}`;
+  $('outcome-body').innerHTML = paragraphs(project.outcomeLead, project.outcome);
+
+  const list = $('project-list');
   for (const g of groups) {
     const section = document.createElement('div'); section.className = 'nav-group';
     const label = document.createElement('p'); label.className = 'group-label'; label.textContent = g.name.toUpperCase(); section.append(label);
-    names.forEach((name,i) => {
-      const link = document.createElement('a'); link.className = 'project-link'; link.href = url(g,i); link.setAttribute('aria-label',`${g.name} — ${name}`);
-      const number = document.createElement('span'); number.textContent = `0${i+1}`; link.append(number,document.createTextNode(name));
+    g.projects.forEach((p,i) => {
+      const link = document.createElement('a'); link.className = 'project-link'; link.href = url(g,i); link.setAttribute('aria-label',`${g.name} — ${p.organisation}`);
+      const number = document.createElement('span'); number.textContent = `0${i+1}`; link.append(number,document.createTextNode(p.name));
       if(g === group && i === index) link.setAttribute('aria-current','page');
       section.append(link);
     }); list.append(section);
   }
-  const nextIndex = (index+1)%3, nextGroup = index === 2 ? groups[(groups.indexOf(group)+1)%groups.length] : group;
-  document.querySelector('#next-project').href = url(nextGroup,nextIndex);
-  document.querySelector('#next-name').textContent = names[nextIndex];
+  const last = index === group.projects.length - 1;
+  const nextGroup = last ? groups[(groups.indexOf(group)+1)%groups.length] : group;
+  const nextIndex = last ? 0 : index + 1;
+  $('next-project').href = url(nextGroup,nextIndex);
+  $('next-name').textContent = nextGroup.projects[nextIndex].organisation;
   const mobile = matchMedia('(max-width: 650px)');
   function showCurrentProject() {
     if (!mobile.matches) return;

@@ -171,3 +171,14 @@
 @media (max-width: 360px) {
   :root { --type-ui: 13px; }
 }
+
+/* Portrait: toned slightly toward the archive palette so the studio blue sits in the dark grain. */
+.about-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  filter: saturate(.72) contrast(1.03);
+  border-radius: 2px;
+}

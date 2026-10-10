@@ -3,7 +3,7 @@
 window.createStampPostcards = ({scene, stamps, hover, onReturn}) => {
   const gsap = window.gsap;
   const overlay = document.querySelector('#project-postcards');
-  if (!gsap || !overlay) return null;
+  if (!gsap || !overlay || !window.LOUIS_PROJECTS) return null;
   const get = id => overlay.querySelector(`#pc-${id}`);
   const card = get('postcard'), paper = get('paper-image');
   const paperShell = card.querySelector('.pc-paper-shell');
@@ -14,6 +14,7 @@ window.createStampPostcards = ({scene, stamps, hover, onReturn}) => {
   const countryLabel = get('country-label'), projectTabs = get('project-tabs');
   const panel = get('project-panel'), category = get('project-category');
   const summary = get('project-summary'), projectImage = get('project-image');
+  const meta = get('project-detail');
   const projectVisual = card.querySelector('.pc-project-visual');
   const viewProject = get('view-project');
   const projectLinks = [card.querySelector('.pc-project-image-window'), viewProject];
@@ -87,18 +88,8 @@ window.createStampPostcards = ({scene, stamps, hover, onReturn}) => {
   }, true);
   document.addEventListener('pointerdown', () => { keyboardNavigation = false; }, true);
   document.addEventListener('touchstart', () => { keyboardNavigation = false; }, {capture: true, passive: true});
-  const collections = [
-    {name: 'China', key: 'china', projects: [
-      {name: 'Project A', category: 'Research / Concept', summary: "A brief introduction to the project's context, creative approach, and outcome.", image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'},
-      {name: 'Project B', category: 'Material / Process', summary: 'An exploration of materials, process, and the decisions that shaped the work.', image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'},
-      {name: 'Project C', category: 'Idea / Experiment', summary: 'A concise look at the original idea, key experiments, and final direction.', image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'}
-    ]},
-    {name: 'France', key: 'france', projects: [
-      {name: 'Project A', category: 'Research / Concept', summary: 'A short introduction to the idea, its context, and the thinking behind it.', image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'},
-      {name: 'Project B', category: 'Form / Exploration', summary: 'A study of form and atmosphere, from early observations to a clear direction.', image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'},
-      {name: 'Project C', category: 'Process / Outcome', summary: 'An overview of the process, the main design choices, and the final outcome.', image: 'assets/project-postcards/lily-placeholder-v1.jpg', position: '50% 50%', alt: 'Creamy white double lily against a dark background'}
-    ]}
-  ];
+  // Project content lives in projects-data.js (shared with the project pages).
+  const collections = window.LOUIS_PROJECTS;
   // Motion adapted from the fetched React Bits Shuffle: clipped character strips,
   // horizontal rolls, then alternating odd/even groups. Keep the postcard typography.
   const shuffleLabel = viewProject.querySelector('.pc-view-project-label');
@@ -167,8 +158,9 @@ window.createStampPostcards = ({scene, stamps, hover, onReturn}) => {
   function populateProject(index) {
     const collection = collections[selected];
     const project = collection.projects[index];
-    title.textContent = project.name;
+    title.textContent = project.organisation;
     category.textContent = project.category;
+    if (meta) meta.textContent = `${project.place} · ${project.year}`;
     summary.textContent = project.summary;
     number.textContent = String(index + 1).padStart(2, '0');
     projectImage.src = project.image;
@@ -176,7 +168,7 @@ window.createStampPostcards = ({scene, stamps, hover, onReturn}) => {
     projectImage.alt = project.alt;
     for (const link of projectLinks) {
       link.href = `project.html?collection=${collection.key}&project=${index}`;
-      link.setAttribute('aria-label', `View ${collection.name} — ${project.name}`);
+      link.setAttribute('aria-label', `View ${collection.name} — ${project.organisation}`);
     }
     panel.scrollTop = 0;
     selectTab(index);

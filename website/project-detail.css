@@ -170,3 +170,6 @@ footer { display: flex; justify-content: flex-end; margin-top: 64px; padding: 24
   footer { margin-top: 48px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Spacing previously provided by the removed draft note. */
+.project-header .metadata { margin-bottom: 40px; }
