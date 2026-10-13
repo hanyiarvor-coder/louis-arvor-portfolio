@@ -18,7 +18,8 @@ window.LOUIS_PROJECTS = [
       images: [
         {src: 'assets/projects/pawswing-interzoo-team.jpg', alt: 'The PawSwing team on its booth at Interzoo 2026, Nuremberg', position: '50% 45%'},
         {src: 'assets/projects/pawswing-interzoo-demo.jpg', alt: 'Louis walking buyers through the PawSwing Neo at Interzoo 2026', position: '60% 40%'},
-        {src: 'assets/projects/pawswing-interzoo-pitch.jpg', alt: 'Louis presenting the PawSwing Neo to visitors at Interzoo 2026', position: '72% 40%'}
+        {src: 'assets/projects/pawswing-ifa-demo.jpg', alt: 'Louis demonstrating the grooming brush of the PawSwing Neo at IFA Berlin 2026', position: '52% 40%'},
+        {src: 'assets/projects/pawswing-ifa-crowd.jpg', alt: 'Visitors gathered around the PawSwing booth at IFA Berlin 2026', position: '50% 35%'}
       ],
       name: 'PawSwing',
       organisation: 'PawSwing',
