@@ -170,15 +170,15 @@ window.LOUIS_PROJECTS = [
       category: 'Open to opportunities',
       role: 'Management control apprentice',
       year: '2026 – 2028',
-      period: 'From October 2026',
+      period: 'Available now',
       place: 'France',
       status: 'Looking',
-      summary: 'Looking for a two-year apprenticeship (M1–M2) in management control. Rhythm: three weeks in the company, one week at school. Available from October 2026.',
+      summary: 'Looking for a two-year apprenticeship (M1–M2) in management control. Rhythm: three weeks in the company, one week at school. Available to start immediately.',
       standfirst: 'Looking for a two-year apprenticeship<br>in management control.',
-      contextLead: 'Two years, three weeks in the company and one at school, from October 2026.',
+      contextLead: 'Two years, three weeks in the company and one at school, starting as soon as possible.',
       context: [
         'I am looking for a two-year apprenticeship (M1–M2) in management control, alongside the Contrôle, Finance & Data track at EM Normandie.',
-        'Rhythm: three weeks in the company, one week at school. I am available from October 2026.'
+        'Rhythm: three weeks in the company, one week at school. I am available to start immediately.'
       ],
       processLead: 'What I bring<br>to a finance team.',
       process: 'Experience across three companies in China, built on the work a controller relies on every day.',
