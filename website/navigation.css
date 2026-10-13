@@ -21,3 +21,5 @@
 
 /* Keep navigation out of both the loading screen and its fade-out. */
 html.boot-pending .portfolio-nav,body:has(#cat-loading:not([hidden])) .portfolio-nav{visibility:hidden;pointer-events:none}
+
+.contact-content>a{display:flex;justify-content:center;margin-block:0 14px}

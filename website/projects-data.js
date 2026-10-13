@@ -12,7 +12,14 @@ const placeholder = {
 window.LOUIS_PROJECTS = [
   {key: 'china', name: 'China', projects: [
     {
-      ...placeholder,
+      image: 'assets/projects/pawswing-interzoo-pitch.jpg',
+      position: '72% 40%',
+      alt: 'Louis presenting the PawSwing Neo cat house to visitors at Interzoo 2026',
+      images: [
+        {src: 'assets/projects/pawswing-interzoo-team.jpg', alt: 'The PawSwing team on its booth at Interzoo 2026, Nuremberg', position: '50% 45%'},
+        {src: 'assets/projects/pawswing-interzoo-demo.jpg', alt: 'Louis walking buyers through the PawSwing Neo at Interzoo 2026', position: '60% 40%'},
+        {src: 'assets/projects/pawswing-interzoo-pitch.jpg', alt: 'Louis presenting the PawSwing Neo to visitors at Interzoo 2026', position: '72% 40%'}
+      ],
       name: 'PawSwing',
       organisation: 'PawSwing',
       category: 'Trade shows / Budget control',

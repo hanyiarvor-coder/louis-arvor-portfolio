@@ -22,9 +22,14 @@
   $('status').textContent = project.status;
   $('lead-caption').textContent = project.organisation;
   $('closing-caption').textContent = `${project.place} · ${project.period}`;
-  document.querySelectorAll('#lead-image, .project-image').forEach(img => {
-    img.src = project.image;
-    img.alt = project.image.includes('placeholder') ? '' : project.alt;
+  // Slots in page order: lead, image pair (2), closing. A project can give its own
+  // photos in `images`; without them every slot shows the single `image`.
+  document.querySelectorAll('#lead-image, .project-image').forEach((img, i) => {
+    const photo = project.images ? project.images[i] : {src: project.image, alt: project.alt, position: project.position};
+    if (!photo) { img.closest('figure').hidden = true; return; }
+    img.src = photo.src;
+    img.alt = photo.src.includes('placeholder') ? '' : (photo.alt || '');
+    if (photo.position) img.style.objectPosition = photo.position;
   });
   $('context-body').innerHTML = paragraphs(project.contextLead, project.context);
   $('process-body').innerHTML = paragraphs(project.processLead, [project.process])
